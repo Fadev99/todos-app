@@ -13,7 +13,8 @@
             </q-toolbar>
         </q-header>
         <q-page-container>
-            <AddTasks/>    
+            <AddTasks/>
+            <ListTasks/>
         </q-page-container>
     </q-layout>
 </template>
@@ -21,12 +22,14 @@
 <script>
 import { ref } from "vue";
 import AddTasks from "./components/addTasks.vue"
+import ListTasks from "./components/listTasks.vue"
 
 export default {
     name: "LayoutDefault",
 
     components: {
-        AddTasks
+        AddTasks,
+        ListTasks
     },
 
     setup() {
@@ -36,3 +39,11 @@ export default {
     },
 };
 </script>
+
+<style>
+#app {
+    max-width: 740px;
+    margin: auto;
+    background-color: aliceblue;
+}
+</style>

@@ -98,6 +98,7 @@
 
 <script>
 import { ref } from "vue";
+import { mapActions } from "vuex"
 
 export default {
     setup() {
@@ -131,7 +132,7 @@ export default {
 
             if (trimNameTask) {
                 const task = {
-                    id       : `${trimNameTask}_${this.dueDate}-${Math.random()}`,
+                    id       : `${trimNameTask.replaceAll(' ', '').toLowerCase()}_${this.dueDate}-${Math.random()}`,
                     name     : trimNameTask,
                     category : this.category,
                     dueDate  : this.dueDate,
@@ -139,7 +140,7 @@ export default {
                     done     : false
                 }
 
-                localStorage.setItem('tasks', JSON.stringify(task));
+                this.save(task);
             }
 
             return this.resetFields();
@@ -150,7 +151,9 @@ export default {
             this.priority = "Medium";
             this.category = '';
             this.nameTask = '';
-        }
+        },
+
+        ...mapActions(['save'])
     },
 };
 </script>
