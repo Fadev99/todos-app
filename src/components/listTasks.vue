@@ -2,10 +2,20 @@
     <div>
         <q-card class="my-card" v-for="task in tasks" :key="task.id">
             <q-card-section
-                class="bg__gradient--purple text-white"
-                :class="{ 'bg-teal': task.done }"
+                class="bg__gradient--blue text-white"
+                :class="{ 'bg__gradient--green': task.done }"
             >
-                <div class="text-h6">{{ task.name }}</div>
+                <div class="text-h6">
+                    <span class="material-icons">
+                        {{
+                            task.category === "personal"
+                                ? "person_outline"
+                                : "business"
+                        }}
+                    </span>
+                    &nbsp;
+                    {{ task.name }}
+                </div>
                 <div class="text-subtitle2 cus__flex">
                     Due Date: &nbsp;
                     <span class="material-icons"> event </span>
@@ -16,23 +26,31 @@
             <q-separator />
 
             <q-card-actions align="right">
-                <q-btn flat>Action 1</q-btn>
-                <q-btn flat>Action 2</q-btn>
+                <q-btn
+                    flat
+                    :class="{
+                        btn__done: !task.done,
+                        'btn__re-open': task.done,
+                    }"
+                    @click="doneTask(task.id)"
+                >
+                    {{ task.done ? "Re-Open" : "Done" }}&nbsp;
+                    <span class="material-icons">
+                        {{ task.done ? "settings_backup_restore" : "done" }}
+                    </span>
+                </q-btn>
+                <q-btn flat class="btn__del" @click="removeTask(task.id)">
+                    Delete&nbsp;<span class="material-icons"> delete </span>
+                </q-btn>
             </q-card-actions>
         </q-card>
     </div>
 </template>
 
 <script>
-// import { ref } from "vue";
 import { mapState, mapActions } from "vuex";
 
 export default {
-    setup() {
-        return {
-        };
-    },
-
     computed: {
         ...mapState(["tasks"]),
     },
@@ -42,7 +60,7 @@ export default {
     },
 
     methods: {
-        ...mapActions(["getListTasks"]),
+        ...mapActions(["getListTasks", "removeTask", "doneTask"]),
     },
 };
 </script>
@@ -60,35 +78,28 @@ export default {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
+    display: flex;
+    align-items: center;
 }
 .bg__gradient--blue {
     background: rgb(2, 123, 227);
-    background: linear-gradient(
-        90deg,
-        rgba(2, 123, 227, 1) 20%,
-        rgba(255, 255, 255, 1) 100%,
-        rgba(255, 255, 255, 1) 100%,
-        rgba(255, 255, 255, 1) 100%
-    );
 }
 .bg__gradient--green {
     background: rgb(76, 175, 80);
-    background: linear-gradient(
-        90deg,
-        rgba(76, 175, 80, 1) 20%,
-        rgba(255, 255, 255, 1) 100%,
-        rgba(255, 255, 255, 1) 100%,
-        rgba(255, 255, 255, 1) 100%
-    );
 }
 .bg__gradient--purple {
     background: rgb(156, 39, 176);
-    background: linear-gradient(
-        90deg,
-        rgba(156, 39, 176, 1) 20%,
-        rgba(255, 255, 255, 1) 100%,
-        rgba(255, 255, 255, 1) 100%,
-        rgba(255, 255, 255, 1) 100%
-    );
+}
+.btn__done {
+    background-color: rgba(76, 175, 80, 1);
+    color: #fff;
+}
+.btn__re-open {
+    background-color: rgb(156, 39, 176);
+    color: #fff;
+}
+.btn__del {
+    background-color: #f44336;
+    color: #fff;
 }
 </style>

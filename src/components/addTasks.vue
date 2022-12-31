@@ -62,7 +62,7 @@
                                 <div class="row items-center justify-end">
                                     <q-btn
                                         v-close-popup
-                                        label="Ok"
+                                        label="OK"
                                         color="primary"
                                         flat
                                     />
@@ -88,8 +88,21 @@
                     <!-- end priority -->
                 </q-card-section>
 
-                <q-card-actions align="right" class="bg-white text-teal">
-                    <q-btn flat label="OK" v-close-popup @click="addTask" />
+                <q-card-actions align="right">
+                    <q-btn 
+                        flat 
+                        label="OK" 
+                        :disable="validateFields()" 
+                        v-close-popup 
+                        @click="addTask" 
+                        class="bg-white text-teal"
+                    />
+                    <q-btn 
+                        flat 
+                        label="Cancel" 
+                        v-close-popup 
+                        class="bg-white text-primary"
+                    />
                 </q-card-actions>
             </q-card>
         </q-dialog>
@@ -140,7 +153,7 @@ export default {
                     done     : false
                 }
 
-                this.save(task);
+                this.saveTask(task);
             }
 
             return this.resetFields();
@@ -153,7 +166,11 @@ export default {
             this.nameTask = '';
         },
 
-        ...mapActions(['save'])
+        validateFields() {
+            return (this.category === '' || this.nameTask === '' ?  true : false);
+        },
+
+        ...mapActions(['saveTask'])
     },
 };
 </script>

@@ -12,13 +12,29 @@ export const tasks = createStore({
         }
     },
     actions: {
-        save({ state }, task) {
-            state.tasks.push(task);
+        saveTask({ state }, task) {
+            state.tasks.unshift(task);
             localStorage.setItem("tasks", JSON.stringify(state.tasks));
         },
 
         getListTasks({ state }) {
             state.tasks = JSON.parse(localStorage.getItem("tasks"));
+        },
+
+        removeTask({ state }, taskId) {
+            state.tasks = state.tasks.filter(task => task.id !== taskId);
+
+            localStorage.setItem("tasks", JSON.stringify(state.tasks));
+        },
+
+        doneTask({ state }, taskId) {
+            state.tasks = state.tasks.map(task => {
+                if (task.id === taskId) task.done = !task.done;
+
+                return task;
+            });
+
+            localStorage.setItem('tasks', JSON.stringify(state.tasks));
         }
     }
 });
