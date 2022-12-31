@@ -100,6 +100,7 @@
                     <q-btn 
                         flat 
                         label="Cancel" 
+                        @click="resetFields()"
                         v-close-popup 
                         class="bg-white text-primary"
                     />
