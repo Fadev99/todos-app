@@ -89,19 +89,19 @@
                 </q-card-section>
 
                 <q-card-actions align="right">
-                    <q-btn 
-                        flat 
-                        label="OK" 
-                        :disable="validateFields()" 
-                        v-close-popup 
-                        @click="addTask" 
+                    <q-btn
+                        flat
+                        label="OK"
+                        :disable="validateFields()"
+                        v-close-popup
+                        @click="addTask"
                         class="bg-white text-teal"
                     />
-                    <q-btn 
-                        flat 
-                        label="Cancel" 
+                    <q-btn
+                        flat
+                        label="Cancel"
                         @click="resetFields()"
-                        v-close-popup 
+                        v-close-popup
                         class="bg-white text-primary"
                     />
                 </q-card-actions>
@@ -134,8 +134,8 @@ export default {
     methods: {
         dateBuilder() {
             const day   = new Date();
-            const date  = day.getDate();
-            const month = day.getMonth() + 1;
+            const date  = day.getDate() < 10 ? `0${ day.getDate() }` : day.getDate();
+            const month = day.getMonth() + 1 < 10 ? `0${ day.getMonth() + 1 }` : day.getMonth() + 1;
             const year  = day.getFullYear();
 
             return `${year}/${month}/${date}`;
