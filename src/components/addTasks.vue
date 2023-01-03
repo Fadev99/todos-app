@@ -168,7 +168,7 @@ export default {
         },
 
         validateFields() {
-            return (this.category === '' || this.nameTask === '' ?  true : false);
+            return (this.category === '' || this.nameTask === '');
         },
 
         ...mapActions(['saveTask'])
